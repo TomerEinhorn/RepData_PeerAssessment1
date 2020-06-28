@@ -4,6 +4,9 @@ date: "6/28/2020"
 output: 
   html_document:
     keep_md: true
+    fig_caption: yes
+    pdf_document: default
+    self_contained: no
 ---
 
 
@@ -48,7 +51,7 @@ histdata <- tapply(df$steps, df$date, sum)
 hist(histdata, main = "Total Steps Per Day", xlab = "Number of Steps")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+![](figs/fig-unnamed-chunk-2-1.png)<!-- -->
 
 ## 3. Mean and median number of steps taken each day
 
@@ -87,7 +90,7 @@ plot(meanStepsPerInterval, type="l", xlab = "Interval",
      main = "Time Series Plot of the Average Number of Steps Taken")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](figs/fig-unnamed-chunk-4-1.png)<!-- -->
 
 
 ## 5.The 5-minute interval that, on average, contains the maximum number of 
@@ -199,7 +202,7 @@ histdatanew <- tapply(dfnew$steps, df$date, sum)
 hist(histdatanew, main = "Total Steps Per Day", xlab = "Number of Steps")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](figs/fig-unnamed-chunk-9-1.png)<!-- -->
 
 Now I'll compare the mean and median of steps created by the new data set to see
 the impact of imputing the missing data:
@@ -279,7 +282,7 @@ plot(weekendSteps, type="l", xlab = "Interval",
      main = "Time Series Plot of the Average Number of Steps Taken on Weekdays")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+![](figs/fig-unnamed-chunk-12-1.png)<!-- -->
 
 Thank you for reading.
 

@@ -1,11 +1,20 @@
 ---
 author: "Tomer Einhorn"
 date: "6/28/2020"
-output: html_document
+output: 
+  html_document:
+    keep_md: true
+    fig_caption: yes
+    pdf_document: default
+    self_contained: no
 ---
 
 ```{r setup, include=FALSE}
+
 knitr::opts_chunk$set(echo = TRUE)
+
+knitr::opts_chunk$set( fig.path = "figs/fig-")
+
 ```
 
 # Reproducible Reaserch Course Project 1
