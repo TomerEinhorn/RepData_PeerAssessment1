@@ -1,12 +1,12 @@
 ---
 author: "Tomer Einhorn"
 date: "6/28/2020"
-output: html_document
+output: 
+  html_document:
+    keep_md: true
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 
 # Reproducible Reaserch Course Project 1
 
@@ -31,8 +31,8 @@ The first thing I am going to do is to unzip the file containg the data set
 needed for this project and read its content to a data set:
 
 
-```{r, echo = TRUE}
 
+```r
 unzip("activity.zip")
 df <- read.csv("activity.csv")
 ```
@@ -42,22 +42,36 @@ df <- read.csv("activity.csv")
 In this section I will create a histogram of the total number of steps taken 
 each day.
 
-```{r, echo = TRUE}
+
+```r
 histdata <- tapply(df$steps, df$date, sum)
 hist(histdata, main = "Total Steps Per Day", xlab = "Number of Steps")
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 ## 3. Mean and median number of steps taken each day
 
 In this part I'll calculate the mean and median number of steps taken each day:
 
-```{r, echo = TRUE}
+
+```r
 meanStepsPerDay <-  mean(tapply(df$steps, df$date, sum), na.rm = TRUE)
 medianStepsPerDay <-  median(tapply(df$steps, df$date, sum), na.rm = TRUE)
 cat("The mean number of steps each day is ", meanStepsPerDay, ".\n", sep = '')
+```
+
+```
+## The mean number of steps each day is 10766.19.
+```
+
+```r
 cat("The median number of steps each day is ", medianStepsPerDay, ".\n", 
     sep = '')
+```
+
+```
+## The median number of steps each day is 10765.
 ```
 
 ## 4. Time series plot of the average number of steps taken
@@ -65,12 +79,15 @@ cat("The median number of steps each day is ", medianStepsPerDay, ".\n",
 In this section I will create a time series plot of the average number of steps 
 taken:
 
-```{r, echo = TRUE}
+
+```r
 meanStepsPerInterval <- tapply(df$steps, df$interval, mean, na.rm = TRUE)
 plot(meanStepsPerInterval, type="l", xlab = "Interval", 
      ylab = "Mean Steps", 
      main = "Time Series Plot of the Average Number of Steps Taken")
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 
 ## 5.The 5-minute interval that, on average, contains the maximum number of 
@@ -79,9 +96,15 @@ plot(meanStepsPerInterval, type="l", xlab = "Interval",
 In this section I will find the 5-minute interval that, on average, 
 contains the maximum number of steps:
 
-```{r, echo = TRUE}
+
+```r
 cat("The 5-minute interval that contains, on average the maximum number of steps
     is ", which.max(meanStepsPerInterval), ".\n", sep = '')
+```
+
+```
+## The 5-minute interval that contains, on average the maximum number of steps
+##     is 104.
 ```
 
 
@@ -90,13 +113,32 @@ cat("The 5-minute interval that contains, on average the maximum number of steps
 In this section I will impute missing data.
 first of all, let's see how many rows have missing data (for each column):
 
-```{r, echo = TRUE}
+
+```r
 cat("The number of missing values in the steps column is ",sum(is.na(df$steps)),
     ".\n", sep = '')
+```
+
+```
+## The number of missing values in the steps column is 2304.
+```
+
+```r
 cat("The number of missing values in the date column is ",sum(is.na(df$date)), 
     ".\n", sep = '')
+```
+
+```
+## The number of missing values in the date column is 0.
+```
+
+```r
 cat("The number of missing values in the interval column is ",
     sum(is.na(df$interval)), ".\n", sep = '')
+```
+
+```
+## The number of missing values in the interval column is 0.
 ```
 
 We can see that the only column that has missing values is the steps column, and
@@ -106,7 +148,8 @@ Here is the code to perform this task, and create a new dataset (called dfnew)
 with no missing
 values:
 
-```{r, echo = TRUE}
+
+```r
 dfnew <- df
 for (i in unique(dfnew$interval)){
   dfnew$steps[is.na(dfnew$steps) & dfnew$interval == i] <- 
@@ -117,13 +160,32 @@ for (i in unique(dfnew$interval)){
 We can check that indeed there are no missing values in the new data set by 
 using the following code:
 
-```{r, echo = TRUE}
+
+```r
 cat("The number of missing values in the dfnew steps column is "
     ,sum(is.na(dfnew$steps)),".\n", sep = '')
+```
+
+```
+## The number of missing values in the dfnew steps column is 0.
+```
+
+```r
 cat("The number of missing values in the dfnew date column is "
     ,sum(is.na(dfnew$date)), ".\n", sep = '')
+```
+
+```
+## The number of missing values in the dfnew date column is 0.
+```
+
+```r
 cat("The number of missing values in the dfnew interval column is ",
     sum(is.na(dfnew$interval)), ".\n", sep = '')
+```
+
+```
+## The number of missing values in the dfnew interval column is 0.
 ```
 
 ## 7. Histogram of the total number of steps taken each day after missing values are 
@@ -131,26 +193,53 @@ cat("The number of missing values in the dfnew interval column is ",
 
 In this section I will plot a histogram of the total number of steps taken each day after missing values are imputed:
 
-```{r, echo = TRUE}
+
+```r
 histdatanew <- tapply(dfnew$steps, df$date, sum)
 hist(histdatanew, main = "Total Steps Per Day", xlab = "Number of Steps")
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
 Now I'll compare the mean and median of steps created by the new data set to see
 the impact of imputing the missing data:
 
-```{r, echo = TRUE}
+
+```r
 meanStepsPerDayNew <-  mean(tapply(dfnew$steps, df$date, sum))
 medianStepsPerDayNew <-  median(tapply(dfnew$steps, df$date, sum))
 cat("The mean number of steps each day is ", meanStepsPerDay, ".\n", sep = '')
+```
+
+```
+## The mean number of steps each day is 10766.19.
+```
+
+```r
 cat("Therefore, there's an absolute differnce of ", 
     abs(meanStepsPerDayNew - meanStepsPerDayNew), "between the means of the new data set and the old data set with the missing values. \n", sep = '')
+```
+
+```
+## Therefore, there's an absolute differnce of 0between the means of the new data set and the old data set with the missing values.
+```
+
+```r
 cat("The median number of steps each day is ", medianStepsPerDay, ".\n", 
     sep = '')
+```
+
+```
+## The median number of steps each day is 10765.
+```
+
+```r
 cat("Therefore, there's an absolute differnce of ", 
     abs(medianStepsPerDayNew - medianStepsPerDayNew), "between the medians of the new data set and the old data set with the missing values. \n", sep = '')
+```
 
+```
+## Therefore, there's an absolute differnce of 0between the medians of the new data set and the old data set with the missing values.
 ```
 
 
@@ -165,17 +254,18 @@ The first step is creating a factor variable in the new data set which
 determines whether it's a weekday or a weekend (assuming Saturday and Sunday are
 considered weekend)
 
-```{r, echo = TRUE}
+
+```r
 weekdays1 <- c('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday')
 dfnew$partofweek <- factor((weekdays(as.Date(df$date)) %in% weekdays1), 
          levels=c(FALSE, TRUE), labels=c('weekend', 'weekday'))
-  
 ```
 
 The next step is creating the plot. In order to do that, I'll first calculate 
 the mean steps for weekdays and weekends seperatly, and then create the plot:
 
-```{r, echo = TRUE}
+
+```r
 weekdaysSteps <- tapply(dfnew$steps[dfnew$partofweek=="weekend"], 
                         dfnew$interval[dfnew$partofweek=="weekend"], mean)
 weekendSteps <- tapply(dfnew$steps[dfnew$partofweek=="weekend"], 
@@ -188,6 +278,8 @@ plot(weekendSteps, type="l", xlab = "Interval",
      ylab = "Mean Steps", 
      main = "Time Series Plot of the Average Number of Steps Taken on Weekdays")
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 Thank you for reading.
 
